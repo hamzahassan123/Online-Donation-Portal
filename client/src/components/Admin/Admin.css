@@ -1,0 +1,36 @@
+.warning {
+    color: rgb(255, 196, 0);
+}
+
+.white-color {
+    color: white;
+}
+
+#admin-height{
+height: 100vh;
+}
+
+#admin-main-div h1 {
+
+    color: white;
+    position: relative;
+    top: 10vh;
+
+}
+
+.admin-setting {
+    position: relative;
+    top: 12vh;
+    width: 250px;
+    background-color: white;
+    color: #49008e;
+    margin-bottom: 2vh;
+    border-radius: 15px;
+    border: 1px solid white;
+}
+
+
+#bg_size{
+    height: 100vh;
+    width: auto;
+}

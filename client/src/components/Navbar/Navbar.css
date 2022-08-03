@@ -1,0 +1,33 @@
+.nav{
+    margin :0;
+    padding: 0;
+    height: 0.1vh;
+    width: auto;
+    background-color: white;
+}
+
+.mobile-app{
+width: 296px;
+height: 604px;
+margin-left: 0vw;
+}
+
+.dwnld-app{
+    width: 135px;
+    height: 47px;
+}
+
+.nav-link{
+    margin-left: 15px;
+    font-size: 17px;
+}
+
+.nav-link:hover{
+    color: black;
+   
+}
+
+.stats-img-height{
+    height: 300px;
+    width: 600px;
+}
