@@ -288,9 +288,14 @@ router.get("/logout", async (req, res) => {
 router.get("/userdashboard", authenticate, async (req, res) => {
   const user_id = req.user._id;
   let records;
-  records = await Request.find({ user_id });
-  const donations = await Donation.find({ user_id });
-  records?.concat(donations);
+
+  if(req.user.role === 'DONOR') {
+    records = await Donation.find({ user_id });
+  }
+  else {
+    records = await Request.find({ user_id });
+  }
+  console.log(records);
   res.status(200)
     .json(records);
 });

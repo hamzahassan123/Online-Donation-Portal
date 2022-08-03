@@ -12,7 +12,6 @@ class ContactForm extends Component {
   }
 
   sendEmail(e) {
-    e.preventDefault();
 
     emailjs
       .sendForm(

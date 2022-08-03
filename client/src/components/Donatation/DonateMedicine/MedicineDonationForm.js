@@ -43,10 +43,11 @@ function MedicineDonationForm() {
         date,
         approval_status,
       }),
+      credentials: "include"
     });
 
     const data = await res.json();
-    if (res.status === 422 || !data) {
+    if (res.status !== 201 || !data) {
       window.alert("Invalid Medicine Information or expiry date");
     } else {
       window.alert("Medicine Added Successfull");

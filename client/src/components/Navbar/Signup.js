@@ -25,13 +25,22 @@ const Signup = () => {
     setUser({ ...user, [name]: value });
   };
 
+  const sendUserData = () => {
+    if (user.password.length < 8) {
+      window.alert("Password must be of 8 or more characters");
+      return;
+    }
+
+    PostData();
+  }
+
   const PostData = async (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
     //object destructuring
     const { name, email, password, cpassword, role } = user;
 
-    const res = await fetch("/registration", {
+    const res = await fetch("http://localhost:5000/registration", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -81,9 +90,7 @@ const Signup = () => {
             </p>
           </div>
 
-          <form
-            method="POST"
-            id="Signup_form"
+          <div
             class="lg:w-2/6 md:w-1/2 bg-gray-800 bg-opacity-50 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0"
           >
             <h2 class="text-white text-lg font-medium title-font mb-5">
@@ -169,7 +176,7 @@ const Signup = () => {
             </div>
 
             <button
-              onClick={PostData}
+              onClick={sendUserData}
               class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
             >
               Sign Up
@@ -179,7 +186,7 @@ const Signup = () => {
                 Dont have an account?
               </NavLink>
             </p>
-          </form>
+          </div>
         </div>
       </section>
       <hr />

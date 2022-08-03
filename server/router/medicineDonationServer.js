@@ -1,4 +1,5 @@
 const express = require("express");
+const authenticate = require("../middleware/authenticate");
 // import express from "express";
 
 const router = express.Router();
@@ -7,7 +8,7 @@ require("../db/conn");
 
 const User = require("../model/medcineDonationSchema");
 
-router.post("/usermedicinedonation", async (req, res) => {
+router.post("/usermedicinedonation", authenticate, async (req, res) => {
   res.set("Access-Control-Allow-Origin", "*");
   //object destructuring
 
@@ -18,27 +19,15 @@ router.post("/usermedicinedonation", async (req, res) => {
   }
 
   try {
-    // One day Time in ms (milliseconds)
-    var one_day = 1000 * 60 * 60 * 24;
+    const minexpiryDate = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000);
+    const expiryDate = new Date(date);
 
-    // To set present_dates to two variables
-    var present_date = new Date();
-
-    console.log(present_date, date);
-
-    // To Calculate the result in milliseconds and then converting into days
-    var Result = Math.round("2022-08-24" - "2022-07-24") / one_day;
-
-    // To remove the decimals from the (Result) resulting days value
-    var Final_Result = Result.toFixed(0);
-    console.log("time difference is :", Final_Result);
-
-    if (Final_Result < 90) {
+    if (expiryDate < minexpiryDate) {
       return res
         .status(422)
         .json({ error: "Expiry date atleast have a differece of 3 months" });
     } else {
-      const user = User({ medicine_name, quantity, date, approval_status });
+      const user = User({ medicine_name, quantity, date, approval_status, user_id: req.user._id });
 
       const isRecSaved = await user.save();
 
