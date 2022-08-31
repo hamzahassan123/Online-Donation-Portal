@@ -14,7 +14,6 @@ function EditRequestRecord() {
 
   const navigate = useNavigate();
 
-
   const { id } = useParams();
 
   console.log(id);
@@ -25,13 +24,14 @@ function EditRequestRecord() {
 
   const loadRequestDetails = async () => {
     try {
-      const response = await axios.get("/getrequestbyid/" + id, { withCredentials: true });
+      const response = await axios.get("/getrequestbyid/" + id, {
+        withCredentials: true,
+      });
       setRequest(response.data);
     } catch (err) {
       console.log(err);
     }
   };
-
 
   let name, value;
 
@@ -39,7 +39,9 @@ function EditRequestRecord() {
     console.log(e);
     name = e.target.name;
     value = e.target.value;
-    setRequest(request => { return { ...request, [name]: value } });
+    setRequest((request) => {
+      return { ...request, [name]: value };
+    });
   };
 
   const editRequestDetails = async () => {
@@ -48,7 +50,7 @@ function EditRequestRecord() {
         `http://localhost:5000/edit-request/${id}`,
         request,
         {
-          withCredentials: true
+          withCredentials: true,
         }
       );
 
@@ -125,23 +127,24 @@ function EditRequestRecord() {
 
                     {/* <div className="col-span-6 sm:col-span-6 lg:col-span-2"> */}
 
-                    <div className="col-span-6 sm:col-span-3">
+                    <div class="col-span-6 sm:col-span-3">
                       <label
-                        for="first-name"
-                        className="block text-sm font-medium text-gray-200"
+                        for="donor"
+                        class="leading-7 text-sm text-gray-400"
                       >
                         Status
                       </label>
-                      <input
+
+                      <select
                         type="text"
                         name="status"
-                        id="status"
                         value={request?.status}
-                        onChange={(e) => handleInputs(e)}
-                        autocomplete="given-name"
+                        onChange={handleInputs}
                         className="mt-1 p-2 border-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-500 rounded-md bg-gray-900"
-                        placeholder="Enter  request status"
-                      />
+                      >
+                        <option className="bg-gray-900">Pending</option>
+                        <option className="bg-gray-900 ">Approved</option>
+                      </select>
                     </div>
                   </div>
                 </div>

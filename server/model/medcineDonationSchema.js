@@ -13,13 +13,13 @@ const medicineDonationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  approval_status: {
+  status: {
     type: String,
     required: true,
   },
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'USER'
+    ref: "USER",
   },
 });
 

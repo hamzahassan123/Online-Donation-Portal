@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const requestmedicneSchema = new mongoose.Schema({
   medicine_name: {
     type: String,
@@ -14,10 +13,14 @@ const requestmedicneSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  NGO_Name: {
+    type: String,
+    required: true,
+  },
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'USER'
-},
+    ref: "USER",
+  },
 });
 
 const Request = mongoose.model("request_medicine", requestmedicneSchema); //here the first argument is the name of collection

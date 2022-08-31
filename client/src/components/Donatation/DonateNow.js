@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "../Footer";
 import { NavLink } from "react-router-dom";
-import Himg from "../img/patient.jpg";
-
+import Himg from "../img/donation.jpg";
 import Navbar from "../Navbar/Navbar";
 import DonationOption from "./DonationOption";
 
 function DonateNow() {
+  useEffect(() => {
+    document.title = "MEDONOR - Donate Now";
+  });
   return (
     <div>
       <Navbar />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import Navbar from "../Navbar/Navbar";
 import "../Navbar/Navbar.css";
@@ -7,6 +7,12 @@ import Team from "./Team";
 import Footer from "../Footer";
 
 function About(props) {
+  // document.title("MEDONOR - About Us");
+
+  useEffect(() => {
+    document.title = "MEDONOR - About Us";
+  });
+
   return (
     <div>
       <Navbar />

@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from "../../../Navbar/Navbar";
+import { UserContext } from "../../../../App";
 
 const ManageAllRecords = () => {
   const [medicines, setMedicines] = useState([]);
+  const { state: auth, dispatch } = useContext(UserContext);
 
   useEffect(() => {
     getAllMedicines();
@@ -12,12 +14,9 @@ const ManageAllRecords = () => {
 
   const getAllMedicines = async () => {
     try {
-      const response = await axios.get(
-        "/getdonationrecords",
-        {
-          withCredentials: true
-        }
-      );
+      const response = await axios.get("/getdonationrecords", {
+        withCredentials: true,
+      });
       setMedicines(response.data);
       // console.log(us);
       console.log(response.data);
@@ -32,7 +31,9 @@ const ManageAllRecords = () => {
 
   const deleteUser = async (id) => {
     try {
-      await axios.delete("http://localhost:5000/deletedonation/" + id, { withCredentials: true });
+      await axios.delete("http://localhost:5000/deletedonation/" + id, {
+        withCredentials: true,
+      });
       getAllMedicines();
     } catch (error) {
       console.log("error while calling delete api");
@@ -83,7 +84,7 @@ const ManageAllRecords = () => {
                     <td class="py-3 px-6"> {medicine.medicine_name}</td>
                     <td class="py-3 px-6"> {medicine.quantity}</td>
                     <td class="py-3 px-6"> {medicine.date}</td>
-                    <td class="py-3 px-6"> {medicine.approval_status}</td>
+                    <td class="py-3 px-6"> {medicine.status}</td>
                     <td class="py-3 px-6">
                       {" "}
                       <Link to={"../editmedicinerecord/" + medicine._id}>

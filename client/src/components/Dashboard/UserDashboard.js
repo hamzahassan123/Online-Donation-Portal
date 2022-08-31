@@ -4,9 +4,14 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 
 function UserDashboard() {
+  const date = new Date();
+  useEffect(() => {
+    document.title = "MEDONOR - User Dashboard";
+  });
+
   const navigate = useNavigate();
   const [records, setRecords] = useState([]);
-  const {state: auth, dispatch} = useContext(UserContext);
+  const { state: auth, dispatch } = useContext(UserContext);
 
   console.log(auth);
 
@@ -47,40 +52,18 @@ function UserDashboard() {
             <div class="flex items-center justify-between h-16">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
-                  <NavLink
-                    className="ml-3 text-xl text-gray-300 "
-                    exact
-                    to="/userdashboard"
-                  >
+                  <NavLink className="ml-3 text-xl text-gray-300 " exact to="/">
                     MEDONOR |
                   </NavLink>
                 </div>
-                <div class="hidden md:block">
-                  <div class="ml-10 flex items-baseline space-x-4">
-                    <NavLink
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium "
-                      exact
-                      to="/"
-                    >
-                      Home
-                    </NavLink>
-
-                    <NavLink
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium "
-                      exact
-                      to="/medicinerecords"
-                    >
-                      Medicine Records
-                    </NavLink>
-                  </div>
-                </div>
+                <div class="hidden md:block"></div>
               </div>
               <div class="hidden md:block">
                 <div class="ml-4 flex items-center md:ml-6">
                   <div class="ml-3 relative">
                     <form method="GET">
                       <span className="text-gray-300">WELCOME | </span>{" "}
-                      <span className="text-white">{ auth?.name }</span>
+                      <span className="text-white">{auth?.name}</span>
                     </form>
                   </div>
                 </div>
@@ -111,6 +94,9 @@ function UserDashboard() {
                       <th scope="col" class="py-3 px-6">
                         Status
                       </th>
+                      <th scope="col" class="py-3 px-6">
+                        Date
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -119,6 +105,10 @@ function UserDashboard() {
                         <td class="py-3 px-6"> {record.medicine_name}</td>
                         <td class="py-3 px-6"> {record.quantity}</td>
                         <td class="py-3 px-6"> {record.status}</td>
+                        <td class="py-3 px-6">
+                          {" "}
+                          {date.getDate() + "/8" + "/" + date.getFullYear()}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

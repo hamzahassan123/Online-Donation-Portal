@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import Navbar from "./Navbar";
 import { NavLink, useNavigate } from "react-router-dom";
 import Footer from "../Footer";
+import "./Navbar.css";
 
 import { UserContext } from "../../App";
 
@@ -11,7 +12,6 @@ const Signin = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
 
   const loginUser = async (e) => {
     e.preventDefault();
@@ -30,10 +30,13 @@ const Signin = () => {
     const data = await res.json();
 
     if (res.status === 400 || !data) {
-      window.alert("Invalid Credential");
+      document.getElementById("password_error").innerHTML =
+        "Email or password is incorrect";
+      return false;
     } else {
       dispatch({ type: "USER", payload: data.data });
       window.alert("Login Successfull");
+      document.getElementById("password_error").innerHTML = "";
 
       navigate("/");
     }
@@ -42,15 +45,15 @@ const Signin = () => {
   return (
     <div>
       <Navbar />
-      <section class="text-gray-400 bg-gray-900 body-font">
-        <div className="flex flex-col text-center w-full mb-12 ">
+      <section id="signin_height" class="text-gray-400 bg-gray-900 body-font">
+        {/* <div className="flex flex-col text-center w-full mb-12 ">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-white mt-20">
             Sign In Page
           </h1>
           <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
             Sign in to perform actions.
           </p>
-        </div>
+        </div> */}
         <form
           method="POST"
           class="container px-5 py-24 mx-auto flex flex-wrap items-center"
@@ -65,7 +68,7 @@ const Signin = () => {
           </div>
           <div class="lg:w-2/6 md:w-1/2 bg-gray-800 bg-opacity-50 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
             <h2 class="text-white text-lg font-medium title-font mb-5">
-              Sign In
+              SIGN IN
             </h2>
             <div class="relative mb-4">
               <label for="full-name" class="leading-7 text-sm text-gray-400">
@@ -86,7 +89,7 @@ const Signin = () => {
                 Password
               </label>
               <input
-                type="text"
+                type="password"
                 id="password"
                 name="password"
                 value={password}
@@ -94,8 +97,11 @@ const Signin = () => {
                 class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-indigo-900 rounded border border-gray-600 focus:border-indigo-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                 placeholder="Enter your Password"
               />
-            </div>
-
+            </div>{" "}
+            <label
+              id="password_error"
+              class="leading-7 text-sm text-gray-400 text-red-500 relative bottom-5"
+            ></label>
             <button
               onClick={loginUser}
               class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"

@@ -4,6 +4,10 @@ import "./Admin.css";
 import NavBar from "../Navbar/Navbar";
 
 function Admin() {
+  useEffect(() => {
+    document.title = "MEDONOR - Admin Panel";
+  });
+
   return (
     <>
       <NavBar />
@@ -21,7 +25,7 @@ function Admin() {
 
           <ul>
             <li>
-              <NavLink  to="/admin/medicine-donation/managerecords">
+              <NavLink to="/admin/medicine-donation/managerecords">
                 <button className="btn admin-setting hover:bg-gray-900 hover:text-white p-1.5">
                   {" "}
                   Manage Medicine Donation Records
@@ -29,7 +33,7 @@ function Admin() {
               </NavLink>
             </li>
             <li>
-              <NavLink  to="/admin/medicine-request/managerecords">
+              <NavLink to="/admin/medicine-request/managerecords">
                 <button className="btn admin-setting hover:bg-gray-900 hover:text-white p-1.5">
                   {" "}
                   Manage Medicine Request Records
@@ -44,22 +48,7 @@ function Admin() {
                 </button>
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/admin/medicine-donation/add">
-                <button className="btn admin-setting hover:bg-gray-900 hover:text-white p-1.5">
-                  {" "}
-                  Add Medicine Donation
-                </button>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/admin/medicine-request/add">
-                <button className="btn admin-setting hover:bg-gray-900 hover:text-white p-1.5">
-                  {" "}
-                  Add Medicine Request
-                </button>
-              </NavLink>
-            </li>
+
             <li>
               <NavLink exact to="/">
                 <button className="btn admin-setting hover:bg-gray-900 hover:text-white p-1.5">

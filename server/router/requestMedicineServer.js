@@ -17,13 +17,19 @@ router.post("/requestmedicineserver", authenticate, async (req, res) => {
   res.set("Access-Control-Allow-Origin", "*");
   //object destructuring
 
-  const { medicine_name, quantity, status } = req.body;
+  const { medicine_name, quantity, NGO_Name, status } = req.body;
 
   try {
     if (!medicine_name || !quantity) {
       res.status(422).json({ error: "some of your field/fields are empty" });
     } else {
-      const user = User({ medicine_name, quantity, status, user_id: req.user._id });
+      const user = User({
+        medicine_name,
+        quantity,
+        NGO_Name,
+        status,
+        user_id: req.user._id,
+      });
       //here we will hash the passwords
       const isRequestSaved = await user.save();
 

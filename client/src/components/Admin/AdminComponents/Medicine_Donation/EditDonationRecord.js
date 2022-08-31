@@ -7,7 +7,7 @@ const defaultValue = {
   medicine_name: "",
   quantity: "",
   date: "",
-  approval_status: "",
+  status: "",
 };
 
 function EditMedicineRecord() {
@@ -23,13 +23,14 @@ function EditMedicineRecord() {
 
   const loadMedicineDetails = async () => {
     try {
-      const response = await axios.get("/getdonationbyid/" + id, { withCredentials: true });
+      const response = await axios.get("/getdonationbyid/" + id, {
+        withCredentials: true,
+      });
       setMedicine(response.data);
     } catch (err) {
       console.log(err);
     }
   };
-
 
   let name, value;
 
@@ -37,7 +38,9 @@ function EditMedicineRecord() {
     //console.log(e);
     name = e.target.name;
     value = e.target.value;
-    setMedicine(medicine => { return { ...medicine, [name]: value } });
+    setMedicine((medicine) => {
+      return { ...medicine, [name]: value };
+    });
   };
 
   const editMedicineDetails = async () => {
@@ -46,7 +49,7 @@ function EditMedicineRecord() {
         `http://localhost:5000/edit-donation/${id}`,
         medicine,
         {
-          withCredentials: true
+          withCredentials: true,
         }
       );
 
@@ -59,7 +62,6 @@ function EditMedicineRecord() {
 
       window.alert("Medicine updated!");
       navigate("../../managerecords");
-      
     } catch (error) {
       console.log(error);
     }
@@ -142,23 +144,24 @@ function EditMedicineRecord() {
                         className="mt-1 p-2 border-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-500 rounded-md bg-gray-900"
                       />
                     </div>
-                    <div className="col-span-6 sm:col-span-3">
+                    <div class="col-span-6 sm:col-span-3">
                       <label
-                        for="first-name"
-                        className="block text-sm font-medium text-gray-200"
+                        for="donor"
+                        class="leading-7 text-sm text-gray-400"
                       >
                         Status
                       </label>
-                      <input
+
+                      <select
                         type="text"
-                        name="approval_status"
-                        id="status"
-                        value={medicine?.approval_status}
-                        onChange={(e) => handleInputs(e)}
-                        autocomplete="given-name"
+                        name="status"
+                        value={medicine?.status}
+                        onChange={handleInputs}
                         className="mt-1 p-2 border-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-500 rounded-md bg-gray-900"
-                        placeholder="Enter  medicine status"
-                      />
+                      >
+                        <option className="bg-gray-900">Pending</option>
+                        <option className="bg-gray-900 ">Approved</option>
+                      </select>
                     </div>
                   </div>
                 </div>

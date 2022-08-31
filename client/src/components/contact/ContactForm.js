@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import emailjs from "emailjs-com";
-import { useNavigate } from "react-router-dom";
 
 class ContactForm extends Component {
   constructor() {
@@ -12,16 +11,15 @@ class ContactForm extends Component {
   }
 
   sendEmail(e) {
-
     emailjs
       .sendForm(
-        "service_rzvb8zv",
-        "template_raj5f3f",
+        "service_04o3w6v", //service id from email js
+        "template_jkihub6", //template id from email js
         e.target,
-        "wEa2YymRuF68dvBtE"
+        "aqsHXXqzc_Ngr7vVT" //public key of email js
       )
       .then((res) => {
-        console.log("email sent successfully");
+        // alert("message sent successfully");
         this.setState(() => {
           return {
             success: true,
@@ -31,6 +29,7 @@ class ContactForm extends Component {
       .catch((err) => {
         console.log(err);
       });
+    window.alert("do you want to proceed with this message");
   }
 
   render() {
@@ -68,6 +67,7 @@ class ContactForm extends Component {
                       type="text"
                       id="name"
                       name="name"
+                      placeholder="Enter your name"
                       className="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:bg-gray-900 focus:ring-2 focus:ring-indigo-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       required
                     />
@@ -85,6 +85,7 @@ class ContactForm extends Component {
                       type="email"
                       id="email"
                       name="email"
+                      placeholder="Enter your email"
                       className="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:bg-gray-900 focus:ring-2 focus:ring-indigo-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       required
                     />
@@ -101,6 +102,7 @@ class ContactForm extends Component {
                     <textarea
                       id="message"
                       name="message"
+                      placeholder="Ask your query..."
                       className="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:bg-gray-900 focus:ring-2 focus:ring-indigo-900 h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                       required
                     ></textarea>
@@ -115,67 +117,8 @@ class ContactForm extends Component {
                   </button>
                 </div>
                 <div className="p-2 w-full pt-8 mt-8 border-t border-gray-800 text-center">
-                  <a className="text-indigo-400">Medonorofficial@gmail.com</a>
-                  <p className="leading-normal my-5">Phone : +923081249812</p>
-                  <span className="inline-flex">
-                    <a className="text-gray-500">
-                      <svg
-                        fill="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        className="w-5 h-5"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
-                      </svg>
-                    </a>
-                    <a className="ml-4 text-gray-500">
-                      <svg
-                        fill="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        className="w-5 h-5"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                      </svg>
-                    </a>
-                    <a className="ml-4 text-gray-500">
-                      <svg
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        className="w-5 h-5"
-                        viewBox="0 0 24 24"
-                      >
-                        <rect
-                          width="20"
-                          height="20"
-                          x="2"
-                          y="2"
-                          rx="5"
-                          ry="5"
-                        ></rect>
-                        <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
-                      </svg>
-                    </a>
-                    <a className="ml-4 text-gray-500">
-                      <svg
-                        fill="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        className="w-5 h-5"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-                      </svg>
-                    </a>
-                  </span>
+                  <p className="text-indigo-400">hamza.bsse3863@iiu.edu.pk</p>
+                  <p className="leading-normal my-5">Phone : +92-349-4837337</p>
                 </div>
               </form>
             </div>

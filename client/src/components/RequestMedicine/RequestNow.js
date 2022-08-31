@@ -11,6 +11,7 @@ function AddMedicine(props) {
   const [user, setUser] = useState({
     medicine_name: "",
     quantity: "",
+    NGO_Name: "",
     status: "pending",
   });
 
@@ -31,7 +32,7 @@ function AddMedicine(props) {
     // window.alert("i am working");
 
     //object destructuring
-    const { medicine_name, quantity, status } = user;
+    const { medicine_name, quantity, NGO_Name, status } = user;
 
     const res = await fetch("/requestmedicineserver", {
       method: "POST",
@@ -44,6 +45,7 @@ function AddMedicine(props) {
 
         medicine_name,
         quantity,
+        NGO_Name,
         status,
       }),
     });
@@ -113,6 +115,23 @@ function AddMedicine(props) {
                         onChange={handleInputs}
                         class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:bg-gray-900 focus:ring-2 focus:ring-indigo-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                         placeholder="Enter the meicine quantity you want"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="block p-2 w-1/2">
+                    <div class="relative">
+                      <label for="name" class="leading-7 text-sm text-gray-400">
+                        NGO Name
+                      </label>
+                      <input
+                        type="text"
+                        id="ngo_name"
+                        name="NGO_Name"
+                        value={user?.NGO_Name}
+                        onChange={handleInputs}
+                        class="w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:bg-gray-900 focus:ring-2 focus:ring-indigo-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        placeholder="Enter Your NGO name"
                         required
                       />
                     </div>

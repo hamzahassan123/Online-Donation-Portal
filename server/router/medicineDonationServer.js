@@ -12,7 +12,7 @@ router.post("/usermedicinedonation", authenticate, async (req, res) => {
   res.set("Access-Control-Allow-Origin", "*");
   //object destructuring
 
-  const { medicine_name, quantity, date, approval_status } = req.body;
+  const { medicine_name, quantity, date, status } = req.body;
 
   if (!medicine_name || !quantity || !date) {
     res.status(422).json({ error: "some of your fields/field are empty" });
@@ -23,11 +23,18 @@ router.post("/usermedicinedonation", authenticate, async (req, res) => {
     const expiryDate = new Date(date);
 
     if (expiryDate < minexpiryDate) {
+      // alert("Expiry date atleast have a differece of 3 months");
       return res
         .status(422)
         .json({ error: "Expiry date atleast have a differece of 3 months" });
     } else {
-      const user = User({ medicine_name, quantity, date, approval_status, user_id: req.user._id });
+      const user = User({
+        medicine_name,
+        quantity,
+        date,
+        status,
+        user_id: req.user._id,
+      });
 
       const isRecSaved = await user.save();
 

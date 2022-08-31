@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 // import { userMedDonation } from "../service/api";
 
 function MedicineDonationForm() {
+  let letters = /^[a-zA-Z ]*$/;
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
     medicine_name: "",
     quantity: "",
     date: "",
-    approval_status: "pending",
+    status: "pending",
   });
 
   let name, value;
@@ -26,33 +27,61 @@ function MedicineDonationForm() {
 
   const PostData = async (e) => {
     e.preventDefault();
+    const minexpiryDate = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000);
+    const expiryDate = new Date(user.date);
 
-    //object destructuring
-    const { medicine_name, quantity, date, approval_status } = user;
-
-    const res = await fetch("/usermedicinedonation", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        //it converts JSON to string because web servers dont understand JSON
-
-        medicine_name,
-        quantity,
-        date,
-        approval_status,
-      }),
-      credentials: "include"
-    });
-
-    const data = await res.json();
-    if (res.status !== 201 || !data) {
-      window.alert("Invalid Medicine Information or expiry date");
+    if (!user.medicine_name.match(letters)) {
+      document.getElementById("name_error").innerHTML =
+        "name must contain only alphabets";
+      return false;
+    } else if (user.quantity < 1) {
+      document.getElementById("quantity_error").innerHTML =
+        "quantity cant be negative or empty";
+    } else if (user.date === "") {
+      // alert("Expiry date atleast have a differece of 3 months");
+      document.getElementById("date_error").innerHTML =
+        "Expiry date cant be empty";
+    } else if (expiryDate < minexpiryDate) {
+      // alert("Expiry date atleast have a differece of 3 months");
+      document.getElementById("date_error").innerHTML =
+        "Expiry date atleast have a differece of 3 months";
     } else {
-      window.alert("Medicine Added Successfull");
+      document.getElementById("name_error").innerHTML = "";
+      document.getElementById("quantity_error").innerHTML = "";
+      document.getElementById("date_error").innerHTML = "";
+      //object destructuring
+      const { medicine_name, quantity, date, status } = user;
 
-      navigate("/");
+      const res = await fetch("/usermedicinedonation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          //it converts JSON to string because web servers dont understand JSON
+
+          medicine_name,
+          quantity,
+          date,
+          status,
+        }),
+        credentials: "include",
+      });
+
+      const data = await res.json();
+      if (res.status !== 201 || !data) {
+        // document.getElementById("name_error").innerHTML =
+        //   "name must contain only alphabets";
+        return false;
+      } else if (res.status === 422) {
+        alert("expiry date atleast have 90 days extension");
+        //   return false;
+      } else {
+        // document.getElementById("name_error").innerHTML = "";
+        window.alert("Medicine Added Successfull");
+
+        navigate("/");
+      }
     }
   };
   return (
@@ -92,6 +121,10 @@ function MedicineDonationForm() {
                         className="mt-1 p-2 border-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-500 rounded-md bg-gray-900"
                         placeholder="Enter your medicine name"
                       />
+                      <label
+                        id="name_error"
+                        class="text-gray-400 text-red-500 relative bottom-0"
+                      ></label>
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">
@@ -112,6 +145,10 @@ function MedicineDonationForm() {
                         className="mt-1 p-2 border-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-500 rounded-md bg-gray-900"
                         placeholder="Enter the quantity of medicine"
                       />
+                      <label
+                        id="quantity_error"
+                        class="text-gray-400 text-red-500 relative bottom-0"
+                      ></label>
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">
@@ -130,25 +167,11 @@ function MedicineDonationForm() {
                         autocomplete="address-level2"
                         className="mt-1 p-2 border-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-500 rounded-md bg-gray-900"
                       />
-                    </div>
-                    {/* <div className="col-span-6 sm:col-span-3">
                       <label
-                        for="first-name"
-                        className="block text-sm font-medium text-gray-200"
-                      >
-                        Status
-                      </label>
-                      <input
-                        type="text"
-                        name="medicine_name"
-                        id="medicine_name"
-                        value={user?.approval_status}
-                        onChange={(e) => handleInputs(e)}
-                        autocomplete="given-name"
-                        className="mt-1 p-2 border-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-500 rounded-md bg-gray-900"
-                        placeholder="Enter your medicine name"
-                      />
-                    </div> */}
+                        id="date_error"
+                        class="text-gray-400 text-red-500 relative bottom-0"
+                      ></label>
+                    </div>
                   </div>
                 </div>
               </div>

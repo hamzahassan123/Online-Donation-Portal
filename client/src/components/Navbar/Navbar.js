@@ -11,7 +11,8 @@ function Navbar() {
   console.log(auth);
 
   const isNGO = auth?.role === "NGO";
-  const isAdmin = auth?.isAdmin;
+  const isDONOR = auth?.role === "DONOR";
+  const isAdmin = auth?.role === "ADMIN";
 
   console.log(isNGO);
 
@@ -19,37 +20,52 @@ function Navbar() {
     return (
       <>
         <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-          {
-            auth &&
-            <NavLink exact to="/userdashboard" className="nav-link">
+          {/* {auth && (
+            <NavLink exact to="/userdashboard" className="nav-link underline">
               Dashboard
             </NavLink>
-          }
-          <NavLink exact to="/donatenow" className="nav-link">
-            Donate Now
-          </NavLink>
-          {
-            isNGO &&
-            <NavLink exact to="/requestmedicine" className="nav-link">
+          )} */}
+          {isDONOR && (
+            <NavLink exact to="/userdashboard" className="nav-link underline">
+              Dashboard
+            </NavLink>
+          )}
+          {isDONOR && (
+            <NavLink exact to="/donatenow" className="nav-link  underline">
+              Donate Now
+            </NavLink>
+          )}
+
+          {isNGO && (
+            <NavLink exact to="/userdashboard" className="nav-link underline">
+              Dashboard
+            </NavLink>
+          )}
+          {isNGO && (
+            <NavLink
+              exact
+              to="/requestmedicine"
+              className="nav-link  underline"
+            >
               Request Medicine
             </NavLink>
-          }
-          <NavLink exact to="/about" className="nav-link">
+          )}
+
+          <NavLink exact to="/about" className="nav-link  underline">
             About Us
           </NavLink>
-          <NavLink exact to="/contact" className="nav-link">
+          <NavLink exact to="/contact" className="nav-link  underline">
             Contact Us
           </NavLink>
-          {
-            isAdmin &&
-            <NavLink exact to="/admin" className="nav-link">
+          {isAdmin && (
+            <NavLink exact to="/admin" className="nav-link  underline">
               Admin
             </NavLink>
-          }
+          )}
         </nav>
 
         <button class=" mx-2 inline-flex items-center bg-indigo-600 border-0 py-2 px-3 focus:outline-none hover:bg-white hover:text-indigo-600 hover:border-solid border-2 border-indigo-600  rounded text-white mt-4 md:mt-0">
-          <NavLink exact to={`${auth ? '/logout' : '/signin'}`}>
+          <NavLink exact to={`${auth ? "/logout" : "/signin"}`}>
             {auth ? "Logout" : "Signin"}
           </NavLink>
         </button>

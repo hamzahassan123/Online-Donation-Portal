@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Himg from "../img/patient.jpg";
 
 function Header(props) {
   return (
@@ -30,6 +29,9 @@ function Header(props) {
                   </span>
                 </h1>
                 <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                  <h1>
+                    <b>{props.phadith}</b>
+                  </h1>
                   {props.headerText}
                 </p>
                 <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
@@ -54,7 +56,7 @@ function Header(props) {
         <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
           <img
             class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-            src={Himg}
+            src={props.Himg}
             alt=""
           />
         </div>

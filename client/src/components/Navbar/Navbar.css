@@ -31,3 +31,11 @@ margin-left: 0vw;
     height: 300px;
     width: 600px;
 }
+
+#signin_height{
+    height: 100vh;
+}
+
+.Reset_Email{
+    width: 200%;
+}

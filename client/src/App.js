@@ -7,9 +7,13 @@ import Home from "./components/Home/Home";
 import About from "./components/About/About";
 import Contact from "./components/contact/Contact";
 import DonateNow from "./components/Donatation/DonateNow";
+import DonateBlood from './components/Donatation/DonateBlood/DonateBlood';
+import DonateBook from './components/Donatation/DonateBooks/DonateBook';
+import DonateClothes from './components/Donatation//DonateClothes/DonateClothes';
+import DonateFood from './components/Donatation/DonateFood/DonateFood';
 import RequestMedicine from "./components/RequestMedicine/RequestMedicine";
 import DonateMedicine from "./components/Donatation/DonateMedicine/DonateMedicine";
-import DonateMoney from "./components/Donatation/Donatemoney/DonateMoney";
+// import DonateMoney from "./components/Donatation/Donatemoney/DonateMoney";
 import Admin from "./components/Admin/Admin";
 import AddNGO from "./components/Admin/AdminComponents/AddNGO";
 // import RemoveMedicine from "./components/Admin/AdminComponents/RemoveMedicine";
@@ -44,7 +48,7 @@ const App = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include"
+        credentials: "include",
       });
 
       const user = await res.json();
@@ -54,7 +58,7 @@ const App = () => {
       }
 
       dispatch({ type: "USER", payload: user });
-    }
+    };
 
     checkAuth();
   }, []);
@@ -69,10 +73,11 @@ const App = () => {
             element={
               <Home
                 headerDetails={{
-                  ftitle: "Save Medicine , ",
-                  stitle: "Save Life",
+                  ftitle: "Save Medicine & Life, ",
+                  stitle: "By Donating Meds ",
+                  hadith: "Prophet Muhammad (P.B.U.H) Said : ",
                   htext:
-                    "That don't lights. Blessed land spirit creature divide our made two itself upon you'll dominion waters man second good you they're divided upon winged were replenish night",
+                    "“Do not show lethargy or negligence in giving alms and charity till your last breath.”(Bukhari and Muslim).",
                 }}
               />
             }
@@ -86,7 +91,7 @@ const App = () => {
                   ftitle: " ",
                   stitle: "ABOUT US",
                   htext:
-                    "We are BSSE F-18 batch students working on our final year project",
+                    "We are BSSE F-18 batch students currently working on our final year project in 'International Islamic university'",
                 }}
               />
             }
@@ -107,7 +112,6 @@ const App = () => {
             }
           />
           <Route exact path="/donatenow" element={<DonateNow />} />
-
           <Route
             exact
             path="/requestmedicine"
@@ -116,8 +120,7 @@ const App = () => {
                 headerDetails={{
                   ftitle: " ",
                   stitle: "REQUEST MEDICINE",
-                  htext:
-                    "NGO's have to verify them before requesting medicines.",
+                  htext: "NGO's can request medicines according to thier need.",
                 }}
               />
             }
@@ -138,16 +141,59 @@ const App = () => {
             }
           />
 
+
           <Route
             exact
-            path="/donatemoney"
+            path="/donateblood"
             element={
-              <DonateMoney
+              <DonateBlood
                 headerDetails={{
                   ftitle: " ",
-                  stitle: "DONATE MONEY",
+                  stitle: "DONATE BLOOD",
                   htext:
-                    "This money will be used to send medicine to NGO's who request for medicine.",
+                    "Here you can donate fresh blood that might help poor and ill people who cant afford.",
+                }}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/donatebooks"
+            element={
+              <DonateBook
+                headerDetails={{
+                  ftitle: " ",
+                  stitle: "DONATE Books",
+                  htext:
+                    "Here you can donate new/old books that might help poor and needy people who cant afford.",
+                }}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/donatefood"
+            element={
+              <DonateFood
+                headerDetails={{
+                  ftitle: " ",
+                  stitle: "DONATE Food",
+                  htext:
+                    "Here you can donate food that might help poor and needy people who cant afford and dying from hunger.",
+                }}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/donateclothes"
+            element={
+              <DonateClothes
+                headerDetails={{
+                  ftitle: " ",
+                  stitle: "DONATE Clothes",
+                  htext:
+                    "Here you can donate new/old clothes that might help poor and needy people who cant afford.",
                 }}
               />
             }
@@ -166,9 +212,8 @@ const App = () => {
               />
             }
           />
-          <Route path="/admin/*" element={<AdminRoutes/>} >
-          </Route>
-          
+          <Route path="/admin/*" element={<AdminRoutes />}></Route>
+
           {/* <Route exact path="/removemedicine" element={<RemoveMedicine />} /> */}
           {/* <Route
             exact
@@ -191,11 +236,7 @@ const App = () => {
             path="/userforgotpassword"
             element={<UserForgotPassword />}
           />
-          <Route
-            exact
-            path="/verified-email"
-            element={<EmailVerified />}
-          />
+          <Route exact path="/verified-email" element={<EmailVerified />} />
         </Routes>
       </UserContext.Provider>
     </>

@@ -4,29 +4,45 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 
 function AddNGO() {
+  let letters = /^[a-zA-Z ]*$/;
+  let regx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/;
+
   const [NGO, setNGO] = useState({
     name: "",
-    NGO_email: ""
-  })
+    NGO_email: "",
+  });
 
   const addNGOHandler = async () => {
-    const res = await axios.post(
-      "/add-NGO",
-      NGO
-    );
+    if (!NGO.name.match(letters)) {
+      document.getElementById("name_error").innerHTML =
+        "name must contain only alphabets";
+      return false;
+    } else if (!regx.test(NGO.NGO_email)) {
+      document.getElementById("email_error").innerHTML =
+        "invalid email address";
+      document.getElementById("name_error").innerHTML = "";
+      return false;
+    } else {
+      document.getElementById("name_error").innerHTML = "";
+      document.getElementById("email_error").innerHTML = "";
+    }
+
+    const res = await axios.post("/add-NGO", NGO);
 
     if (res.status !== 200) {
       window.alert("Somethin went wrong!");
     }
 
     window.alert("NGO added!");
-  }
+  };
 
   const handleInputs = (e) => {
     console.log(e);
     const name = e.target.name;
     const value = e.target.value;
-    setNGO(NGO => { return { ...NGO, [name]: value } });
+    setNGO((NGO) => {
+      return { ...NGO, [name]: value };
+    });
   };
 
   return (
@@ -61,6 +77,10 @@ function AddNGO() {
                         required
                       />
                     </div>
+                    <label
+                      id="name_error"
+                      class="leading-7 text-sm text-gray-400 text-red-500 relative bottom-0"
+                    ></label>
                   </div>
                   <br />
                   <div class="block p-2 w-1/2">
@@ -78,10 +98,17 @@ function AddNGO() {
                         required
                       />
                     </div>
+                    <label
+                      id="email_error"
+                      class="leading-7 text-sm text-gray-400 text-red-500 relative bottom-0"
+                    ></label>
                   </div>
 
                   <div class="p-2 w-full">
-                    <button onClick={addNGOHandler} class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mb-5">
+                    <button
+                      onClick={addNGOHandler}
+                      class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg mb-5"
+                    >
                       Add NGO
                     </button>
                     <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">

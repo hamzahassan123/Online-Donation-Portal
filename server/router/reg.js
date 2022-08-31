@@ -3,7 +3,10 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const authenticate = require("../middleware/authenticate");
-const { sendConfirmationEmail, resetPasswordEmail } = require("../services/nodemailer.config");
+const {
+  sendConfirmationEmail,
+  resetPasswordEmail,
+} = require("../services/nodemailer.config");
 const config = require("../configs");
 
 require("../db/conn");
@@ -11,7 +14,7 @@ require("../db/conn");
 const User = require("../model/UserSchemaRegistration");
 const NGOEmail = require("../model/NGOOfficialEmailSchema");
 const Request = require("../model/requestMedicineSchema");
-const Donation = require("../model/medcineDonationSchema")
+const Donation = require("../model/medcineDonationSchema");
 
 // router.post("/", (req, res) => {
 //   const { name, email, password, cpassword } = req.body; //object destructuring property
@@ -75,8 +78,7 @@ router.post("/registration", async (req, res) => {
     const isEmailExist = await User.findOne({ email: email.toLowerCase() });
 
     if (isEmailExist) {
-      res.status(400)
-        .json({ error: "This email already exists" });
+      res.status(400).json({ error: "This email already exists" });
       return;
     }
 
@@ -97,20 +99,14 @@ router.post("/registration", async (req, res) => {
       email,
       password,
       cpassword,
-      role
+      role,
     };
 
     const emailToken = jwt.sign({ user }, config.secret);
 
-    sendConfirmationEmail(
-      name,
-      email,
-      emailToken
-    );
+    sendConfirmationEmail(name, email, emailToken);
 
-    res.status(201)
-      .send("User registered. Verify your email now.");
-
+    res.status(201).send("User registered. Verify your email now.");
   } catch (error) {
     console.log(error);
   }
@@ -124,7 +120,7 @@ router.get("/confirm-signup/:confirmationCode", async (req, res) => {
 
     const exists = await User.findOne({ email: decoded.user.email });
 
-    if(exists) {
+    if (exists) {
       res.status(400);
       res.send("Already registered");
       return;
@@ -140,18 +136,15 @@ router.get("/confirm-signup/:confirmationCode", async (req, res) => {
 
     res.redirect("http://localhost:3000/verified-email");
   } catch (err) {
-    res.status(400)
-      .send(err);
+    res.status(400).send(err);
   }
-})
+});
 
 router.post("/forgot-password", async (req, res) => {
   try {
     const { email } = req.body;
 
-    if (
-      !email
-    ) {
+    if (!email) {
       res.status(400);
       res.send("Missing a field.");
     }
@@ -170,10 +163,9 @@ router.post("/forgot-password", async (req, res) => {
 
     res.send("Password reset link sent!");
   } catch (err) {
-    res.status(400)
-      .send(err);
+    res.status(400).send(err);
   }
-})
+});
 
 router.get("/confirm-forgot-password/:resetPasswordCode", async (req, res) => {
   try {
@@ -191,19 +183,16 @@ router.get("/confirm-forgot-password/:resetPasswordCode", async (req, res) => {
 
     res.redirect(`http://localhost:3000/userresetpassword?user_id=${user._id}`);
   } catch (err) {
-    res.status(400)
-      .send(err);
+    res.status(400).send(err);
   }
-})
+});
 
 router.post("/reset-password/:userid", async (req, res) => {
   try {
     const { password } = req.body;
     const user_id = req.params.userid;
 
-    if (
-      !password
-    ) {
+    if (!password) {
       res.status(400);
       res.send("Missing a field.");
       return;
@@ -224,10 +213,9 @@ router.post("/reset-password/:userid", async (req, res) => {
 
     res.send("Password reset successfully");
   } catch (err) {
-    res.status(400)
-      .send(err);
+    res.status(400).send(err);
   }
-})
+});
 
 //login varification
 
@@ -257,7 +245,9 @@ router.post("/signin", async (req, res) => {
       });
 
       if (isMatched) {
-        return res.status(201).json({ message: "user login successfully", data: isUserFound });
+        return res
+          .status(201)
+          .json({ message: "user login successfully", data: isUserFound });
       } else {
         return res.status(400).json({ error: "invalid cradential" });
       }
@@ -277,7 +267,7 @@ router.get("/checkauth", authenticate, async (req, res) => {
   }
 
   res.json(req.user);
-})
+});
 
 router.get("/logout", async (req, res) => {
   console.log("Hello my logout page");
@@ -289,15 +279,13 @@ router.get("/userdashboard", authenticate, async (req, res) => {
   const user_id = req.user._id;
   let records;
 
-  if(req.user.role === 'DONOR') {
+  if (req.user.role === "DONOR") {
     records = await Donation.find({ user_id });
-  }
-  else {
+  } else {
     records = await Request.find({ user_id });
   }
   console.log(records);
-  res.status(200)
-    .json(records);
+  res.status(200).json(records);
 });
 
 module.exports = router;

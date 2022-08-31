@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import "./Navbar.css";
 
 const UserForgotPassword = () => {
   const [user, setUser] = useState({
@@ -37,9 +38,11 @@ const UserForgotPassword = () => {
     const data = res.json();
 
     if (res.status === 400 || !data) {
-      window.alert("Invalid Email");
+      document.getElementById("email_error").innerHTML =
+        "This email doesnt exist in our system";
     } else {
       window.alert("A password reset link has been set to your email");
+      document.getElementById("email_error").innerHTML = "";
     }
   };
   return (
@@ -58,7 +61,7 @@ const UserForgotPassword = () => {
                 <div class="lg:w-1/2 md:w-2/3 mx-auto">
                   <form method="POST" className="flex flex-wrap -m-2">
                     <div class=" p-2 w-1/2 ">
-                      <div class="relative">
+                      <div class="relative ">
                         <label
                           for="name"
                           class="leading-7 text-sm text-gray-400"
@@ -67,15 +70,18 @@ const UserForgotPassword = () => {
                         </label>
                         <input
                           type="email"
-                          id="email"
                           name="email"
                           value={user?.email}
                           onChange={handleInputs}
-                          className="w-full bg-gray-900 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:bg-gray-900 focus:ring-2 focus:ring-indigo-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out "
+                          className="Reset_Email bg-gray-900 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:bg-gray-900 focus:ring-2 focus:ring-indigo-900 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out "
                           placeholder="Enter Email"
                           required
                         />
                       </div>
+                      <label
+                        id="email_error"
+                        class="leading-7 text-sm text-gray-400 text-red-500 relative bottom-0"
+                      ></label>
                     </div>
                     <br />
 

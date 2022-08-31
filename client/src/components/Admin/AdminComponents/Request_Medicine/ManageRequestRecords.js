@@ -15,7 +15,7 @@ const ManageRequestRecords = () => {
       const response = await axios.get(
         "http://localhost:5000/getrequestrecords",
         {
-          withCredentials: true
+          withCredentials: true,
         }
       );
       setRequests(response.data);
@@ -32,7 +32,9 @@ const ManageRequestRecords = () => {
 
   const deleteRequest = async (id) => {
     try {
-      await axios.delete("http://localhost:5000/deleterequest/" + id, { withCredentials: true });
+      await axios.delete("http://localhost:5000/deleterequest/" + id, {
+        withCredentials: true,
+      });
       getAllRequests();
     } catch (error) {
       console.log("error while calling delete api");
@@ -58,6 +60,9 @@ const ManageRequestRecords = () => {
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" class="py-3 px-6">
+                    NGO Name
+                  </th>
+                  <th scope="col" class="py-3 px-6">
                     Medicine Name
                   </th>
                   <th scope="col" class="py-3 px-6">
@@ -77,6 +82,7 @@ const ManageRequestRecords = () => {
               <tbody>
                 {requests.map((request) => (
                   <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                    <td class="py-3 px-6"> {request.NGO_Name}</td>
                     <td class="py-3 px-6"> {request.medicine_name}</td>
                     <td class="py-3 px-6"> {request.quantity}</td>
                     <td class="py-3 px-6"> {request.status}</td>
